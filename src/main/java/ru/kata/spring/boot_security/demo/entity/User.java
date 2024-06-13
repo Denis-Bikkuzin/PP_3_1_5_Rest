@@ -30,7 +30,7 @@ public class User implements UserDetails {
     private String city;
 
     @ManyToMany
-    @JoinTable(name = "roles",
+    @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "name"))
     private Set<Role> roles;
