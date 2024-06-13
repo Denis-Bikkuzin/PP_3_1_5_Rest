@@ -1,18 +1,15 @@
 package ru.kata.spring.boot_security.demo.entity;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.management.relation.Role;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "users_table")
+@Table(name = "users")
 public class User implements UserDetails {
 
     @Id
@@ -30,10 +27,10 @@ public class User implements UserDetails {
     private String city;
 
     @ManyToMany
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "name"))
-    private Set<Role> roles;
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Collection<Role> roles;
 
     public User() {
 
@@ -45,54 +42,9 @@ public class User implements UserDetails {
         this.city = city;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public User setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public User setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public User setSurname(String surname) {
-        this.surname = surname;
-        return this;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public User setCity(String city) {
-        this.city = city;
-        return this;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public User setRoles(Set<Role> roles) {
-        this.roles = roles;
-        return this;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return roles;
     }
 
     @Override
@@ -125,10 +77,61 @@ public class User implements UserDetails {
         return true;
     }
 
-    public User(Long id, String name, String surname, String city) {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
         this.city = city;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", city='" + city + '\'' +
+                '}';
     }
 }
