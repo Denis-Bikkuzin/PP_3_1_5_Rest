@@ -39,8 +39,8 @@ public class UserService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        //String sql = "select u from User u left join fetch u.roles where u.name=:name";
-        User user = userRepository.findByUsername(username);
+        String sql = "select u from User u left join fetch u.roles where u.name=:name";
+        User user = findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'", username));
         }
