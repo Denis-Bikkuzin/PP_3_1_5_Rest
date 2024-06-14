@@ -35,17 +35,17 @@
         th:text="${err}" class="error" style="color: red"/>
   </ul>
   <br><br>
-  <label for="lastname">Enter lastname: </label>
-  <input type="text" th:field="*{lastname}" id="lastname"/>
+  <label for="surname">Enter lastname: </label>
+  <input type="text" th:field="*{surname}" id="surname"/>
   <ul>
-    <li th:each="err : ${#fields.errors('lastname')}"
+    <li th:each="err : ${#fields.errors('surname')}"
         th:text="${err}" class="error" style="color: red"/>
   </ul>
   <br><br>
   <label for="city">Enter city: </label>
   <input type="text" th:field="*{city}" id="city"/>
   <ul>
-    <li th:each="err : ${#fields.errors('age')}"
+    <li th:each="err : ${#fields.errors('city')}"
         th:text="${err}" class="error" style="color: red"/>
   </ul>
   <br><br>
