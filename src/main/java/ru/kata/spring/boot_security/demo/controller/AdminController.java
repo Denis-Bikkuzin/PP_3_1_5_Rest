@@ -36,10 +36,10 @@ public class AdminController {
 
     }
 
-    @GetMapping
+    @GetMapping("")
     public String allUsers(Model model) {
         model.addAttribute("user", userService.getAllUsers());
-        return "all-users";
+        return "admin";
     }
 
     @GetMapping("/show")
