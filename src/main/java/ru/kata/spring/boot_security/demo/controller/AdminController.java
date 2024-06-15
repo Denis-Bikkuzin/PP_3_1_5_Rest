@@ -1,23 +1,13 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
-import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
-
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -38,18 +28,19 @@ public class AdminController {
 
     @GetMapping("")
     public String allUsers(Model model) {
-        model.addAttribute("user", userService.getAllUsers());
+        model.addAttribute("allUsers", userService.getAllUsers());
         return "admin";
     }
 
     @GetMapping("/show")
     public String show(@RequestParam("id") long id, Model model) {
         model.addAttribute("user", userService.getUser(id));
-        return "show";
+        return "admin";
     }
 
     @GetMapping("/new")
-    public String newUser(User user, Model model) {
+    public String newUser(Model model) {
+        model.addAttribute("user", new User());
         model.addAttribute("roles", roleService.allRoles());
         return "new";
     }

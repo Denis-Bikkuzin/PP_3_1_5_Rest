@@ -5,7 +5,9 @@
     <title>Update User</title>
 </head>
 <body>
-<form th:method="PATCH" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
+<form th:method="POST" th:action="@{/admin/update}" th:object="${user}">
+    <input type="hidden" th:field="*{id}" th:value="${user.id}"/>
+    <table border="1">
 
     <br>
     <label for="username">Username</label>
@@ -25,7 +27,7 @@
     <br>
     <label for="city">City</label>
     <input type="text" th:field="*{city}" id="city"/>
-    <div style="color:red" th:if="${#fields.hasErrors('city')}" th:errors="*{city}">Email error</div>
+    <div style="color:red" th:if="${#fields.hasErrors('city')}" th:errors="*{city}">City error</div>
     <br>
 
     <label for="password">Password</label>
