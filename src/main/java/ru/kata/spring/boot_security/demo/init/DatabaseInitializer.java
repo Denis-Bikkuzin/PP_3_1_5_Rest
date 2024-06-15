@@ -46,20 +46,20 @@ public class DatabaseInitializer implements ApplicationListener<ContextRefreshed
         adminRoles.add(userRole);
 
         User admin = new User();
-        admin.setUsername("admin5");
+        admin.setUsername("admin6");
         admin.setName("Alik");
         admin.setCity("Oren");
-        admin.setSurname("Barb");
-        admin.setPassword(passwordEncoder.encode("admin5"));
+        admin.setSurname("Barbash");
+        admin.setPassword(passwordEncoder.encode("admin6"));
         admin.setRoles(adminRoles);
         userRepository.save(admin);
 
         User user = new User();
-        user.setUsername("user5");
+        user.setUsername("user6");
         user.setName("Eva");
         user.setCity("Salavat");
-        user.setSurname("Petins");
-        user.setPassword(passwordEncoder.encode("user5"));
+        user.setSurname("Petinsent");
+        user.setPassword(passwordEncoder.encode("user6"));
         user.setRoles(userRoles);
         userRepository.save(user);
 

@@ -48,8 +48,17 @@
     <li th:each="err : ${#fields.errors('city')}"
         th:text="${err}" class="error" style="color: red"/>
   </ul>
-  <br><br>ц
-  <input type="submit" value="OK"/>
+  <br><br>
+  <label for="roles">Select roles: </label>
+  <select th:field="*{roles}" id="roles" multiple>
+    <option th:each="role : ${allRoles}" th:value="${role}" th:text="${role.name}"></option>
+  </select>
+  <ul>
+    <li th:each="err : ${#fields.errors('roles')}"
+        th:text="${err}" class="error" style="color: red"/>
+  </ul>
+  <br><br>
+  <input type="submit" value="Save User"/>
 </form>
 
 </body>

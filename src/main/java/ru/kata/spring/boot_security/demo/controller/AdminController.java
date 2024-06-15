@@ -22,10 +22,13 @@ public class AdminController {
 
     private final UserService userService;
 
+    private final RoleRepository roleRepository;
+
 
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, RoleRepository roleRepository) {
         this.userService = userService;
+        this.roleRepository = roleRepository;
 
     }
 
@@ -40,6 +43,7 @@ public class AdminController {
     public String addNewUser(Model model) {
         User user = new User();
         model.addAttribute("user", user);
+        model.addAttribute("allRoles", roleRepository.findAll());
         return "user-info";
     }
 
@@ -60,6 +64,7 @@ public class AdminController {
         Optional<User> user = userService.getUser(id);
         if (user.isPresent()) {
             model.addAttribute("user", user);
+            model.addAttribute("allRoles", roleRepository.findAll());
             return "user-info";
         } else throw new UsernameNotFoundException(String.format("Username with id = %s not found", id));
     }
