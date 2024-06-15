@@ -38,18 +38,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/index").permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
-                .anyRequest().authenticated()
+                .antMatchers("/logout", "/user/**").hasAnyRole("USER","ADMIN")
+                .anyRequest().hasRole("ADMIN")
                 .and()
                 .formLogin().successHandler(successUserHandler)
                 .permitAll()
                 .and()
-                .logout()
-                .logoutUrl("/logout")
+                .logout().logoutUrl("/logout")
                 .logoutSuccessUrl("/login")
                 .permitAll();
     }
@@ -69,10 +65,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //    }
 
 
-    @Bean
-    JdbcUserDetailsManager users(DataSource dataSource) {
-        return new JdbcUserDetailsManager(dataSource);
-    }
+//    @Bean
+//    JdbcUserDetailsManager users(DataSource dataSource) {
+//        return new JdbcUserDetailsManager(dataSource);
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

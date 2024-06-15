@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 
 @Service
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     User findByUsername(String username);
 
