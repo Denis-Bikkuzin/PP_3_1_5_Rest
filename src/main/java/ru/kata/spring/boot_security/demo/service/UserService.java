@@ -20,63 +20,20 @@ import java.util.stream.Collectors;
 
 
 @Service
-public class UserService implements UserDetailsService {
+public interface UserService {
 
-    private final UserRepository userRepository;
+    User findByUsername(String username);
 
-    private final RoleRepository roleRepository;
+    void addUser(User user);
 
-    @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-    }
+    List<User> getAllUsers();
 
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
+    void deleteUser(Long id);
 
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        String sql = "select u from User u left join fetch u.roles where u.name=:name";
-        User user = findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(String.format("No user found with username '%s'", username));
-        }
-        return user;
-    }
+    User getUser(Long id);
 
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-        return roles
-                .stream()
-                .map(r -> new SimpleGrantedAuthority(r.getName()))
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public List<User> gelAllUsers() {
-        return userRepository.findAll();
-    }
+    void updateUser(User user);
 
 
-    @Transactional(readOnly = true)
-    public Optional<User> getUser(long id) {
-        return userRepository.findById(id);
-    }
-
-
-    @Transactional
-    public void saveUser(User user) {
-        user.setRoles(Collections.singletonList(roleRepository.getById(1L)));
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-    }
-
-    @Transactional
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
-    }
 
 }

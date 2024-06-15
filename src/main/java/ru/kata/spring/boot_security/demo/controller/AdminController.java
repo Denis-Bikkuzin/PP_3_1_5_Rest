@@ -10,6 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
@@ -24,60 +25,61 @@ public class AdminController {
 
     private final UserService userService;
 
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
 
 
     @Autowired
-    public AdminController(UserService userService, RoleRepository roleRepository) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
-        this.roleRepository = roleRepository;
+        this.roleService = roleService;
+
 
     }
 
     @GetMapping
     public String allUsers(Model model) {
-        List<User> allUsers = userService.gelAllUsers();
-        model.addAttribute("allUsers", allUsers);
+        model.addAttribute("user", userService.getAllUsers());
         return "all-users";
     }
 
-    @GetMapping("/addNewUser")
-    public String addNewUser(Model model) {
-        User user = new User();
-        model.addAttribute("user", user);
-        model.addAttribute("allRoles", roleRepository.findAll());
-        return "user-info";
+    @GetMapping("/show")
+    public String show(@RequestParam("id") long id, Model model) {
+        model.addAttribute("user", userService.getUser(id));
+        return "show";
     }
 
-    @PostMapping("/saveUser")
-    public String saveUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
+    @GetMapping("/new")
+    public String newUser(User user, Model model) {
+        model.addAttribute("roles", roleService.allRoles());
+        return "new";
+    }
+
+    @PostMapping("")
+    public String create(@ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "user-info";
+            model.addAttribute("userRoles", roleService.allRoles());
+            return "new";
         }
-        Collection<Role> roles = new ArrayList<>();
-        for (Role role : user.getRoles()) {
-            roles.add(roleRepository.findById(role.getId())
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid role ID: " + role.getId())));
-        }
-        userService.saveUser(user);
-
+        userService.addUser(user);
         return "redirect:/admin";
-
-
     }
 
-    @GetMapping("/updateInfo")
-    public String updateUser(@RequestParam("id") long id, Model model) {
-        Optional<User> user = userService.getUser(id);
-        if (user.isPresent()) {
-            model.addAttribute("user", user);
-            model.addAttribute("allRoles", roleRepository.findAll());
-            return "user-info";
-        } else throw new UsernameNotFoundException(String.format("Username with id = %s not found", id));
+    @GetMapping("/edit")
+    public String edit(@RequestParam("id") long id, Model model) {
+        model.addAttribute("user", userService.getUser(id));
+        model.addAttribute("userRoles", roleService.allRoles());
+        return "edit";
     }
 
-    @GetMapping("/deleteUser")
-    public String deleteUser(@RequestParam("id") long id) {
+    @PostMapping("/update")
+    public String update(@ModelAttribute("user") User user, Model model) {
+        model.addAttribute("userRoles", roleService.allRoles());
+        userService.updateUser(user);
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/delete")
+    public String delete(@RequestParam("id") long id) {
         userService.deleteUser(id);
         return "redirect:/admin";
     }
