@@ -13,6 +13,8 @@ import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +53,11 @@ public class AdminController {
     public String saveUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "user-info";
+        }
+        Collection<Role> roles = new ArrayList<>();
+        for (Role role : user.getRoles()) {
+            roles.add(roleRepository.findById(role.getId())
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid role ID: " + role.getId())));
         }
         userService.saveUser(user);
 
