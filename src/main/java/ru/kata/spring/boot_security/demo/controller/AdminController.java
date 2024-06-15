@@ -45,7 +45,7 @@ public class AdminController {
         return "new";
     }
 
-    @PostMapping("")
+    @PostMapping("/create")
     public String create(@ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("userRoles", roleService.allRoles());
