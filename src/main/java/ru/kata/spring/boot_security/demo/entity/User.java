@@ -25,6 +25,8 @@ public class User implements UserDetails {
 
     private String city;
 
+    private String email;
+
     @ManyToMany
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -124,6 +126,14 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -132,5 +142,13 @@ public class User implements UserDetails {
                 ", surname='" + surname + '\'' +
                 ", city='" + city + '\'' +
                 '}';
+    }
+
+    public String roleToString(){
+        StringBuilder sb = new StringBuilder();
+        for(Role role: roles){
+            sb.append(role.roleName()).append(" ");
+        }
+        return sb.toString();
     }
 }

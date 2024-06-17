@@ -48,7 +48,7 @@ public class DatabaseInitializer implements ApplicationListener<ContextRefreshed
         User admin = new User();
         admin.setUsername("admin12");
         admin.setName("Aldfgh245n");
-        admin.setCity("Oren");
+        admin.setEmail("admin12@mail.ru");
         admin.setSurname("BarbashaF24fgsd5");
         admin.setPassword(passwordEncoder.encode("admin12"));
         admin.setRoles(adminRoles);
@@ -57,7 +57,7 @@ public class DatabaseInitializer implements ApplicationListener<ContextRefreshed
         User user = new User();
         user.setUsername("user12");
         user.setName("Evsfg");
-        user.setCity("Salavadfgsfgt");
+        user.setEmail("user12@mail.ru");
         user.setSurname("Petinsentsadf2352fg");
         user.setPassword(passwordEncoder.encode("user12"));
         user.setRoles(userRoles);

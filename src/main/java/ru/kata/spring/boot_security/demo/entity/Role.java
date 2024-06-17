@@ -55,4 +55,13 @@ public class Role implements GrantedAuthority {
     public void setUsers(List<User> users) {
         this.users = users;
     }
+
+    @Override
+    public String toString() {
+        return  name;
+    }
+
+    public String roleName() {
+        return name.substring("ROLE_".length());
+    }
 }

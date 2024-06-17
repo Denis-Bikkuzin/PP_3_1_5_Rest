@@ -9,6 +9,8 @@ import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -26,52 +28,79 @@ public class AdminController {
 
     }
 
-    @GetMapping("")
-    public String allUsers(Model model) {
-        model.addAttribute("allUsers", userService.getAllUsers());
-        return "admin";
-    }
+//    @GetMapping("")
+//    public String allUsers(Model model) {
+//        model.addAttribute("allUsers", userService.getAllUsers());
+//        return "admin";
+//    }
+//
+//    @GetMapping("/show")
+//    public String show(@RequestParam("id") long id, Model model) {
+//        model.addAttribute("user", userService.getUser(id));
+//        return "admin";
+//    }
+//
+//    @GetMapping("/new")
+//    public String newUser(Model model) {
+//        model.addAttribute("user", new User());
+//        model.addAttribute("roles", roleService.allRoles());
+//        return "new";
+//    }
+//
+//    @PostMapping("/create")
+//    public String create(@ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
+//        if (bindingResult.hasErrors()) {
+//            model.addAttribute("userRoles", roleService.allRoles());
+//            return "new";
+//        }
+//        userService.addUser(user);
+//        return "redirect:/admin";
+//    }
+//
+//    @GetMapping("/edit")
+//    public String edit(@RequestParam("id") long id, Model model) {
+//        model.addAttribute("user", userService.getUser(id));
+//        model.addAttribute("userRoles", roleService.allRoles());
+//        return "edit";
+//    }
+//
+//    @PostMapping("/update")
+//    public String update(@ModelAttribute("user") User user, Model model) {
+//        model.addAttribute("userRoles", roleService.allRoles());
+//        userService.updateUser(user);
+//        return "redirect:/admin";
+//    }
+//
+//    @PostMapping("/delete")
+//    public String delete(@RequestParam("id") long id) {
+//        userService.deleteUser(id);
+//        return "redirect:/admin";
+//    }
+@GetMapping("")
+public String allUsers(@ModelAttribute("newUser") User newUser, Principal principal, Model model) {
+    User admin = userService.findByUsername(principal.getName());
+    model.addAttribute("admin", admin);
+    model.addAttribute("users", userService.getAllUsers());
+    model.addAttribute("roles", roleService.allRoles());
+    return "admin";
+}
 
-    @GetMapping("/show")
-    public String show(@RequestParam("id") long id, Model model) {
-        model.addAttribute("user", userService.getUser(id));
-        return "admin";
-    }
-
-    @GetMapping("/new")
-    public String newUser(Model model) {
-        model.addAttribute("user", new User());
-        model.addAttribute("roles", roleService.allRoles());
-        return "new";
-    }
-
-    @PostMapping("/create")
-    public String create(@ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("userRoles", roleService.allRoles());
-            return "new";
-        }
+    @PostMapping("")
+    public String create(@ModelAttribute("user") User user) {
         userService.addUser(user);
-        return "redirect:/admin";
+        return  "redirect:/admin";
     }
 
-    @GetMapping("/edit")
-    public String edit(@RequestParam("id") long id, Model model) {
-        model.addAttribute("user", userService.getUser(id));
-        model.addAttribute("userRoles", roleService.allRoles());
-        return "edit";
-    }
-
-    @PostMapping("/update")
-    public String update(@ModelAttribute("user") User user, Model model) {
-        model.addAttribute("userRoles", roleService.allRoles());
+    @PostMapping("/{id}/edit")
+    public String update(@ModelAttribute("user") User user) {
         userService.updateUser(user);
-        return "redirect:/admin";
+        return  "redirect:/admin";
     }
 
     @PostMapping("/delete")
-    public String delete(@RequestParam("id") long id) {
+    public String deleteUser(@RequestParam("id") long id) {
         userService.deleteUser(id);
         return "redirect:/admin";
     }
 }
+
