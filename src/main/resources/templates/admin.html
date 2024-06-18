@@ -134,7 +134,7 @@
 
                                                         <div class="modal-body text-center d-flex justify-content-center">
                                                             <form th:method="POST"
-                                                                  th:action="@{/admin/{id}/edit(id=${users.id})}"
+                                                                  th:action="@{/admin/edit(id=${users.id})}"
                                                                   th:with="editedUser = ${users}"
                                                                   th:object="${editedUser}"
                                                                   id="editModalForm">
