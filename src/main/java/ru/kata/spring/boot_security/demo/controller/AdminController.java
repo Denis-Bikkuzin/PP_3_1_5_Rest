@@ -91,7 +91,7 @@ public String allUsers(@ModelAttribute("newUser") User newUser, Principal princi
         return  "redirect:/admin";
     }
 
-    @PostMapping("/{id}/edit")
+    @PostMapping("/edit")
     public String update(@ModelAttribute("user") User user) {
         userService.updateUser(user);
         return  "redirect:/admin";

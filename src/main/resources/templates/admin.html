@@ -136,7 +136,7 @@
                                                             <form th:method="POST"
                                                                   th:action="@{/admin/edit(id=${users.id})}"
                                                                   th:with="editedUser = ${users}"
-                                                                  th:object="${editedUser}"
+                                                                  th:object="${users}"
                                                                   id="editModalForm">
 
                                                                 <div class="form-group mb-2">
@@ -144,7 +144,7 @@
                                                                            class="form-label fw-bold">ID</label>
                                                                     <input type="text"
                                                                            name="id"
-                                                                           th:value="${editedUser.id}"
+                                                                           th:value="${users.id}"
                                                                            class="form-control"
                                                                            id="editModalUserId"
                                                                            readonly/>
@@ -155,7 +155,7 @@
                                                                            class="form-label fw-bold">Name</label>
                                                                     <input type="text"
                                                                            name="name"
-                                                                           th:value="${editedUser.name}"
+                                                                           th:value="${users.name}"
                                                                            class="form-control"
                                                                            id="editModalName"/>
                                                                 </div>
@@ -165,7 +165,7 @@
                                                                            class="form-label fw-bold">Surname</label>
                                                                     <input type="text"
                                                                            name="surname"
-                                                                           th:value="${editedUser.surname}"
+                                                                           th:value="${users.surname}"
                                                                            class="form-control "
                                                                            id="editModalSurname"/>
                                                                 </div>
@@ -175,7 +175,7 @@
                                                                            class="form-label fw-bold">Username</label>
                                                                     <input type="text"
                                                                            name="username"
-                                                                           th:value="${editedUser.username}"
+                                                                           th:value="${users.username}"
                                                                            class="form-control"
                                                                            id="editModalUsername" required/>
                                                                 </div>
@@ -186,7 +186,7 @@
                                                                            class="form-label fw-bold">Email</label>
                                                                     <input type="text"
                                                                            name="email"
-                                                                           th:value="${editedUser.email}"
+                                                                           th:value="${users.email}"
                                                                            class="form-control"
                                                                            id="editModalEmail" required/>
                                                                 </div>
@@ -244,7 +244,7 @@
 
                                                         <div class="modal-body text-center d-flex justify-content-center">
                                                             <form th:method="POST"
-                                                                  th:action="@{/admin/delete}"
+                                                                  th:action="@{/admin/delete(id=${users.id})}"
                                                                   th:object="${users}"
                                                                   id="deleteModalForm">
                                                                 <div class="form-group mb-2">
