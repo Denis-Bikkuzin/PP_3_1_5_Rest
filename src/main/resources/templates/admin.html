@@ -95,6 +95,7 @@
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Surname</th>
+                                        <th>City</th>
                                         <th>Email</th>
                                         <th>Role</th>
                                         <th>Edit</th>
@@ -109,6 +110,7 @@
                                         <td th:text="${users.id}"></td>
                                         <td th:text="${users.name}"></td>
                                         <td th:text="${users.surname}"></td>
+                                        <td th:text="${users.city}"></td>
                                         <td th:text="${users.email}"></td>
                                         <td th:text="${users.roleToString()}"></td>
 
@@ -178,6 +180,16 @@
                                                                            th:value="${users.username}"
                                                                            class="form-control"
                                                                            id="editModalUsername" required/>
+                                                                </div>
+
+                                                                <div class="form-group mb-2">
+                                                                    <label for="editModalCity"
+                                                                           class="form-label fw-bold">City</label>
+                                                                    <input type="text"
+                                                                           name="city"
+                                                                           th:value="${users.city}"
+                                                                           class="form-control"
+                                                                           id="editModalCity" required/>
                                                                 </div>
 
 
@@ -278,6 +290,16 @@
                                                                 </div>
 
                                                                 <div class="form-group mb-2">
+                                                                    <label for="deleteModalCity"
+                                                                           class="form-label fw-bold">City</label>
+                                                                    <input type="text"
+                                                                           th:value="${users.city}"
+                                                                           class="form-control "
+                                                                           id="deleteModalCity"
+                                                                           readonly/>
+                                                                </div>
+
+                                                                <div class="form-group mb-2">
                                                                     <label for="deleteModalEmail"
                                                                            class="form-label fw-bold">Email</label>
                                                                     <input type="text"
@@ -348,6 +370,13 @@
                                             <input type="text" name="username" th:field="${newUser.username}"
                                                    class="form-control"
                                                    id="username" placeholder="Username"/>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="City" class="form-label fw-bold">City</label>
+                                            <input type="text" name="City" th:field="${newUser.city}"
+                                                   class="form-control"
+                                                   id="city" placeholder="City"/>
                                         </div>
 
                                         <div class="form-group">

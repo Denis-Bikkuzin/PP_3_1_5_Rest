@@ -144,9 +144,9 @@ public class User implements UserDetails {
                 '}';
     }
 
-    public String roleToString(){
+    public String roleToString() {
         StringBuilder sb = new StringBuilder();
-        for(Role role: roles){
+        for (Role role : roles) {
             sb.append(role.roleName()).append(" ");
         }
         return sb.toString();

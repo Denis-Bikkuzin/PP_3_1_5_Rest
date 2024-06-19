@@ -69,7 +69,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Override
     @Transactional
     public void updateUser(User user) {
-        if(!user.getPassword().isEmpty()){
+        if (!user.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         } else {
             user.setPassword(getUser(user.getId()).getPassword());
