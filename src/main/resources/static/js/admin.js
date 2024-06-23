@@ -41,6 +41,7 @@ function showUsers(table) {
         temp += "<td>" + user.name + "</td>"
         temp += "<td>" + user.surname + "</td>"
         temp += "<td>" + user.username + "</td>"
+        temp += "<td>" + user.city + "</td>"
         temp += "<td>" + user.email + "</td>"
         temp += "<td>" + user.roles.map(role => role.name.substring(5)) + "</td>"
         temp += "<td>" + `<a onclick='showEditModal(${user.id})' class="btn btn-info" id="edit">Edit</a>` + "</td>"
@@ -70,6 +71,7 @@ function showOneUser(user) {
     temp += "<td>" + user.name + "</td>"
     temp += "<td>" + user.surname + "</td>"
     temp += "<td>" + user.username + "</td>"
+    temp += "<td>" + user.city + "</td>"
     temp += "<td>" + user.email + "</td>"
     temp += "<td>" + user.roles.map(role => role.name.substring(5)) + "</td>"
     temp += "</tr>"
@@ -110,6 +112,7 @@ function addNewUser(form) {
         name: newUserForm.get('name'),
         surname: newUserForm.get('surname'),
         username: newUserForm.get('username'),
+        city: newUserForm.get('city'),
         email: newUserForm.get('email'),
         password: newUserForm.get('password'),
         roles: rolesUser("#roles")
@@ -147,6 +150,7 @@ function showDeleteModal(id) {
             document.getElementById('firstNameDel').setAttribute('value', deleteUser.name);
             document.getElementById('surnameDel').setAttribute('value', deleteUser.surname);
             document.getElementById('usernameDel').setAttribute('value', deleteUser.username);
+            document.getElementById('cityDel').setAttribute('value', deleteUser.city);
             document.getElementById('emailDel').setAttribute('value', deleteUser.email);
             document.getElementById('passwordDel').setAttribute('value', deleteUser.password);
             if (getRoles(deleteUser.roles).includes("USER") && getRoles(deleteUser.roles).includes("ADMIN")) {
@@ -193,6 +197,7 @@ function showEditModal(id) {
             document.getElementById('nameRed').setAttribute('value', editUser.name);
             document.getElementById('surnameRed').setAttribute('value', editUser.surname);
             document.getElementById('usernameRed').setAttribute('value', editUser.username);
+            document.getElementById('cityRed').setAttribute('value', editUser.city);
             document.getElementById('emailRed').setAttribute('value', editUser.email);
             document.getElementById('passwordRed').setAttribute('value', editUser.password);
             if ((editUser.roles.map(role => role.id)) === 1 && ((editUser.roles.map(role => role.id)) === 2)) {
@@ -219,6 +224,7 @@ function submitFormEditUser(event) {
         name: redUserForm.get('name'),
         surname: redUserForm.get('surname'),
         username: redUserForm.get('username'),
+        city: redUserForm.get('city'),
         email: redUserForm.get('email'),
         password: redUserForm.get('password'),
         roles: rolesUser("#rolesRed")
