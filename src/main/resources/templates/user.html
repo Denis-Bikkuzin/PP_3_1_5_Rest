@@ -1,107 +1,70 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
->
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>User page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="icon" href="https://img.freepik.com/free-icon/leaf_318-654663.jpg">
+    <title>Admin panel</title>
 </head>
-
-<body>
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid" th:if="${#request.userPrincipal}">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <span class="nav-link active h5" aria-current="page" style="display: inline;"
-                          th:text="${user.getEmail()}">Current User</span>
-                    <h5 style="display: inline;" class=" text-white
-                                                           fw-normal">with roles:</h5>
-                    <h5 th:text="${user.roleToString()}"
-                        class=" text-white fw-normal" aria-current="page"
-                        style="display: inline;"> Current User's Roles</h5>
-                </li>
-            </ul>
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
-                </li>
-            </ul>
+<body style="background-color:#f9fafa">
+<!--Header-->
+<div class="container-fluid">
+    <dl class="row p-2 bg-dark text-white">
+        <div class="col-11 text-left">
+            <span class="text-white h4 p-1">
+                    <strong><a id="headUsername"></a></strong>
+                    with roles:
+                    <a id="headRoles"></a>
+                </span>
         </div>
-    </div>
-</nav>
-
-<section>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-2 p-0 mt-2">
-                <ul class="nav nav-pills flex-column mb-auto">
-                    <li th:each="role : ${user.getRoles()}"
-                        th:if="${role.authority.contains('ROLE_ADMIN')}" class="nav-item">
-                        <a th:href="@{/admin}" class="nav-link link-dark"
-                           aria-current="page">
-                            Admin
-                        </a>
-                    </li>
-                    <li>
-                        <a th:href="@{/user}" class="nav-link active">
-                            User
-                        </a>
-                    </li>
-                </ul>
+        <div class="col-1 text-end">
+            <a class="navbar-brand text-white" href="/logout">Logout</a>
+        </div>
+    </dl>
+</div>
+<div class="container-fluid ">
+    <div class="row" style="background-color: #f8f9fa">
+        <!--Buttons-->
+        <div class="col-12 col-md-2 text-left" style="background-color: #ffffff; min-height: 100vh">
+            <div class="d-flex align-items-start">
+                <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
+                            aria-selected="true" style="width: 440%">USER
+                    </button>
+                </div>
             </div>
-
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 bg-light hmax min-vh-100">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 ">
-                    <h1>User information-page</h1>
+        </div>
+        <!--User info-->
+        <div class="col-12 col-md-10">
+            <h1>User information-page</h1>
+            <br>
+            <div class="tab-content" id="v-pills-tabContent">
+                <h5 class="card-header">About user</h5>
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                     aria-labelledby="v-pills-home-tab">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">City</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Role</th>
+                        </tr>
+                        </thead>
+                        <tbody id="oneUserBody">
+                        </tbody>
+                    </table>
                 </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h4>
-                            About user
-                        </h4>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th> ID</th>
-                                <th> First Name</th>
-                                <th> Last Name</th>
-                                <th> Username</th>
-                                <th> City</th>
-                                <th> Email</th>
-                                <th> Role</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td><span th:text=" ${user.id}"> ID </span></td>
-                                <td><span th:text=" ${user.name}"> First Name </span></td>
-                                <td><span th:text=" ${user.surname}"> Last Name </span></td>
-                                <td><span th:text=" ${user.username}"> Username </span></td>
-                                <td><span th:text=" ${user.city}"> City </span></td>
-                                <td><span th:text=" ${user.email}"> Email </span></td>
-                                <td><span th:text="${user.roleToString()}"> Role</span></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </main>
+            </div>
         </div>
     </div>
-</section>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+</div>
+<script src="/js/user.js"></script>
 </body>
 </html>
